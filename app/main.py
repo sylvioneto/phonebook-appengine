@@ -4,10 +4,16 @@ from flask import Flask, redirect, url_for, render_template, request, redirect, 
 from contact import Contact
 import gcp_firestore
 import gcp_redis
+import gcp_devops
 
 
 # Flask initialization
 app = Flask(__name__)
+
+
+# GCP DevOps Flask initialization
+gcp_devops.initialize_profiler()
+app.config['TRACER'] = gcp_devops.initialize_tracer()
 
 
 # App Engine warmup feature

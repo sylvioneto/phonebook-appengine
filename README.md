@@ -55,7 +55,7 @@ gcloud app create --region=southamerica-east1
 gcloud components install app-engine-python
 
 cd ./phonebook-appengine/app
-gcloud app deploy
+gcloud app deploy --quiet
 ```
 
 ## Test
