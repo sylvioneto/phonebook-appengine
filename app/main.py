@@ -60,24 +60,6 @@ def contact(id):
 
     return render_template('details.html', title='Contact details', contact=contact)
 
-# def accounts(id):
-    tracer = app.config['TRACER']
-    with tracer.start_as_current_span("/accounts/{}".format(id)) as current_span:
-#         with tracer.start_as_current_span("gcp_redis.get_account"):
-#             account = gcp_redis.get_account(id)
-
-#         # Cache missed
-#         if not account:
-#             current_span.add_event(name="cache_missed")
-#             with tracer.start_as_current_span("gcp_firestore.get_account"):
-#                 account = gcp_firestore.get_account(id)
-
-#         if account:
-#             with tracer.start_as_current_span("gcp_firestore.set_account"):
-#                 gcp_redis.set_account(account)
-#             return account, 200
-#         else:
-#             return 'Account not found', 404
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
