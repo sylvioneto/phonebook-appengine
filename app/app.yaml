@@ -1,0 +1,16 @@
+runtime: python37
+instance_class: F2
+
+env_variables:
+  REDIS_HOST: <REDIS_IP>
+  REDIS_PORT: "6379"
+
+vpc_access_connector:
+  name: projects/<PROJECT_ID>/locations/southamerica-east1/connectors/appengine-vpc-access
+
+inbound_services:
+- warmup
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
