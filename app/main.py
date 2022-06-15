@@ -41,24 +41,28 @@ def save():
     return redirect(url_for('index'))
 
 
+# This method has instrumentation for Cloud Trace in order to evaluate requests served from Firestore vs Redis
 @app.route('/contact/<id>')
 def contact(id):
+    tracer = app.config['TRACER']
+    with tracer.start_as_current_span("/contact/{}".format(id)) as current_span:
 
-    contact=gcp_redis.get_contact(id)
-
-    if not contact:
-        # Cache miss
-        contact=gcp_firestore.get_contact(id)
-
-        if contact:
-            # Cache fill
-            gcp_redis.set_contact(contact)
+        with tracer.start_as_current_span("gcp_redis.get_contact"):
+            contact=gcp_redis.get_contact(id)
+            
+            if not contact:
+                # Cache miss
+                with tracer.start_as_current_span("gcp_firestore.get_contact"):
+                    contact=gcp_firestore.get_contact(id)
+                    if contact:
+                        # Cache fill
+                        gcp_redis.set_contact(contact)
 
     return render_template('details.html', title='Contact details', contact=contact)
 
 # def accounts(id):
-#     tracer = app.config['TRACER']
-#     with tracer.start_as_current_span("/accounts/{}".format(id)) as current_span:
+    tracer = app.config['TRACER']
+    with tracer.start_as_current_span("/accounts/{}".format(id)) as current_span:
 #         with tracer.start_as_current_span("gcp_redis.get_account"):
 #             account = gcp_redis.get_account(id)
 
