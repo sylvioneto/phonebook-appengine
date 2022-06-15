@@ -50,13 +50,13 @@ def contact(id):
         with tracer.start_as_current_span("gcp_redis.get_contact"):
             contact=gcp_redis.get_contact(id)
             
-            if not contact:
-                # Cache miss
-                with tracer.start_as_current_span("gcp_firestore.get_contact"):
-                    contact=gcp_firestore.get_contact(id)
-                    if contact:
-                        # Cache fill
-                        gcp_redis.set_contact(contact)
+        if not contact:
+            # Cache miss
+            with tracer.start_as_current_span("gcp_firestore.get_contact"):
+                contact=gcp_firestore.get_contact(id)
+                if contact:
+                    # Cache fill
+                    gcp_redis.set_contact(contact)
 
     return render_template('details.html', title='Contact details', contact=contact)
 
