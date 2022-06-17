@@ -1,5 +1,7 @@
+# Rrf https://cloud.google.com/appengine/docs/standard/python3/config/appref
+
 runtime: python37
-instance_class: F2
+instance_class: F1
 
 env_variables:
   REDIS_HOST: <REDIS_IP>
@@ -7,7 +9,10 @@ env_variables:
 
 vpc_access_connector:
   name: projects/<PROJECT_ID>/locations/southamerica-east1/connectors/appengine-vpc-access
+  # Send all egress traffic through the VPC Access Connector
+  egress_setting: all-traffic 
 
+# Mode detail in https://cloud.google.com/appengine/docs/standard/python3/configuring-warmup-requests
 inbound_services:
 - warmup
 
