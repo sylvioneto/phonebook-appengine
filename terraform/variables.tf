@@ -1,14 +1,14 @@
 data "google_project" "project" {}
 
 locals {
+  application_name = "phonebook"
   resource_labels = {
     terraform = "true"
-    app       = "app-eng-phonebook"
+    app       = local.application_name
     purpose   = "demo"
     env       = "sandbox"
-    repo      = "terraform_gcp"
+    repo      = "phonebook-appengine"
   }
-  application_name = "phonebook"
 }
 
 variable "project_id" {

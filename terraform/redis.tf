@@ -3,7 +3,7 @@ resource "google_redis_instance" "cache" {
   tier           = "STANDARD_HA"
   memory_size_gb = 1
   region = var.region
-  labels = locals.resource_labels
+  labels = local.resource_labels
 
   authorized_network = module.vpc.network_id
   connect_mode       = "PRIVATE_SERVICE_ACCESS"

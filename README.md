@@ -7,9 +7,10 @@ This application shows how to deploy an application to App Engine and integrate 
 
 ### Terraform
 1. Create a new project and select it
-2. Open Cloud Shell and clone this repo into the Cloud Shell VM
+2. Open Cloud Shell, clone this repo into the Cloud Shell, then go to the folder
 ```
 git clone https://github.com/sylvioneto/phonebook-appengine.git
+cd ./phonebook-appengine
 ```
 3. Ensure the var is set, otherwise set it with `gcloud config set project` command
 ```
@@ -32,7 +33,6 @@ appengine.googleapis.com servicenetworking.googleapis.com
 
 7. Execute Terraform using Cloud Build
 ```
-cd ./phonebook-appengine/terraform
 gcloud builds submit ./terraform --config cloudbuild.yaml
 ```
 
@@ -50,11 +50,14 @@ gcloud app create --region=southamerica-east1
 
 3. Open the app.yaml file and update the `<REDIS_IP>` and `<PROJECT_ID>` values.
 
-4. Deploy the app:
+4. Install App Engine python dependencies
 ```
 gcloud components install app-engine-python
+```
 
-cd ./phonebook-appengine/app
+5. Deploy the app:
+```
+cd ./app
 gcloud app deploy --quiet
 ```
 
