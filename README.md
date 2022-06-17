@@ -24,12 +24,10 @@ gsutil mb gs://$GOOGLE_CLOUD_PROJECT-tf-state
 
 5. Enable the necessary APIs
 ```
-gcloud services enable cloudbuild.googleapis.com redis.googleapis.com vpcaccess.googleapis.com \
-compute.googleapis.com firestore.googleapis.com cloudresourcemanager.googleapis.com \
-appengine.googleapis.com servicenetworking.googleapis.com
+gcloud services enable cloudbuild.googleapis.com redis.googleapis.com vpcaccess.googleapis.com compute.googleapis.com firestore.googleapis.com cloudresourcemanager.googleapis.com appengine.googleapis.com servicenetworking.googleapis.com
 ```
 
-6. Go to [IAM](https://console.cloud.google.com/iam-admin/iam) and add `Editor` and `Service Networking Admin` roles to the Cloud Build's service account `<PROJECT_NUMBER>@cloudbuild.gserviceaccount.com`.
+6. Go to [IAM](https://console.cloud.google.com/iam-admin/iam), then add `Editor` and `Service Networking Admin` roles to the Cloud Build's service account `<PROJECT_NUMBER>@cloudbuild.gserviceaccount.com`.
 
 7. Execute Terraform using Cloud Build
 ```
@@ -44,24 +42,50 @@ gcloud builds submit ./terraform --config cloudbuild.yaml
 gcloud app create --region=southamerica-east1
 ```
 
-2. Go to [Create a Cloud Firestore](https://console.cloud.google.com/firestore/welcome) and make sure your database is in `Native` mode and in `southamerica-east1`.
+2. Go to [Create a Cloud Firestore](https://console.cloud.google.com/firestore/) and make sure your database is in `Native` mode and located in `southamerica-east1`.
 
-3. Grant `Cloud Datastore User` role to `<PROJECT_ID>@appspot.gserviceaccount.com` service account.
+3. Go to [IAM](https://console.cloud.google.com/iam-admin/iam), then add `Cloud Datastore User` role to `<PROJECT_ID>@appspot.gserviceaccount.com` service account.
 
-3. Open the app.yaml file and update the `<REDIS_IP>` and `<PROJECT_ID>` values.
+4. Open the `app.yaml` file and replace `<REDIS_IP>` by the [Redis's IP](https://console.cloud.google.com/memorystore/redis/instances) and `<PROJECT_ID>` by your project's ID.
 
-4. Install App Engine python dependencies
+5. Install App Engine python dependencies
 ```
 gcloud components install app-engine-python
 ```
 
-5. Deploy the app:
+6. Deploy the app:
 ```
 cd ./app
 gcloud app deploy --quiet
 ```
 
-## Test
+7. Restrict traffic to internal and LB in order to protect your application with Cloud Armor
+```
+gcloud app services update default --ingress=internal-and-cloud-load-balancing
+```
+
+8. Access your app using the load balancer's IP. This is for testing purposes, for actual applications it is recommended to use DNS and HTTPS.  
+You can get the LB IP by running the command below or [clicking here](https://console.cloud.google.com/net-services/loadbalancing/details/http/appengine-lb-url-map):
+```
+gcloud compute addresses describe appengine-lb-address --global
+```
+
+## Destroy
+Execute Terraform using Cloud Build
+```
+gcloud builds submit ./terraform --config cloudbuild_destroy.yaml
+```
+
+## Debugging
+You can run it locally:
+```
+cd ./app
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+export FLASK_ENV=development export FLASK_APP=main.py
+python -m flask run
+```
 gcloud app browse
 
 Testing

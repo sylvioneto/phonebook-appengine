@@ -8,26 +8,26 @@ resource "google_compute_region_network_endpoint_group" "appengine_neg" {
 }
 
 module "lb-http" {
-  source            = "GoogleCloudPlatform/lb-http/google//modules/serverless_negs"
-  version           = "~> 4.4"
-  project           = var.project_id
-  name              = "appengine-lb"
+  source  = "GoogleCloudPlatform/lb-http/google//modules/serverless_negs"
+  version = "~> 4.4"
+  project = var.project_id
+  name    = "appengine-lb"
   # ssl                             = true
   # managed_ssl_certificate_domains = ["your-domain.com"]
   # https_redirect                  = true
 
   backends = {
     default = {
-      description                     = null
-      enable_cdn                      = false
-      custom_request_headers          = null
-      custom_response_headers         = null
+      description             = null
+      enable_cdn              = false
+      custom_request_headers  = null
+      custom_response_headers = null
       # Cloud Armor Security policy
       security_policy = google_compute_security_policy.policy.name
 
 
       log_config = {
-        enable = true
+        enable      = true
         sample_rate = 1.0
       }
 
