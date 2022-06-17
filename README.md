@@ -3,6 +3,8 @@
 ## Introduction
 This application shows how to deploy an application to App Engine and integrate with other products such as Firestore, Redis and Cloud Armor.
 
+![solution](solution.png)
+
 ## Deploy
 
 ### Terraform
