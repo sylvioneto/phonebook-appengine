@@ -12,6 +12,8 @@ module "lb-http" {
   version = "~> 4.4"
   project = var.project_id
   name    = "appengine-lb"
+
+  # RECOMMENDED - Uncomment the lines below and add your domain in order to generate a certificate
   # ssl                             = true
   # managed_ssl_certificate_domains = ["your-domain.com"]
   # https_redirect                  = true
