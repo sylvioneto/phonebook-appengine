@@ -6,10 +6,10 @@ resource "google_compute_security_policy" "policy" {
   rule {
     action      = "deny(403)"
     priority    = "1000"
-    description = "Deny SQL injection"
+    description = "Deny SQLi sensitivity level 2"
     match {
       expr {
-        expression = "evaluatePreconfiguredExpr('sqli-stable')"
+        expression = "evaluatePreconfiguredExpr('sqli-v33-stable', ['owasp-crs-v030301-id942251-sqli', 'owasp-crs-v030301-id942490-sqli', 'owasp-crs-v030301-id942420-sqli', 'owasp-crs-v030301-id942431-sqli', 'owasp-crs-v030301-id942460-sqli', 'owasp-crs-v030301-id942511-sqli', 'owasp-crs-v030301-id942421-sqli', 'owasp-crs-v030301-id942432-sqli'])"
       }
     }
   }
