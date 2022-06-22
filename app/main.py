@@ -35,10 +35,19 @@ def new():
 
 @app.route('/save', methods=['POST'])
 def save():
-    contact = Contact(request.form['firstname'], request.form['lastname'],
-                      request.form['phonenumber'], request.form['email'])                    
+    contact = Contact(request.form['first_name'], request.form['last_name'],
+                      request.form['phone_number'], request.form['email'], request.form['country_code'])                    
     gcp_firestore.save_contact(contact)
     return redirect(url_for('index'))
+
+
+@app.route('/api/save', methods=['POST'])
+def api_save():
+    content = request.json
+    contact = Contact(content['first_name'], content['last_name'],
+                      content['phone_number'], content['email'], content['country_code'])                    
+    gcp_firestore.save_contact(contact)
+    return '', 200
 
 
 # This method has instrumentation for Cloud Trace in order to evaluate requests served from Firestore vs Redis

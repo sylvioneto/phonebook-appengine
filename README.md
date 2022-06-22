@@ -76,10 +76,11 @@ cd ./app
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-export FLASK_ENV=development export FLASK_APP=main.py
+export FLASK_ENV=development FLASK_APP=main.py
 python -m flask run
 ```
-gcloud app browse
 
-Testing
-export FLASK_ENV=development; export FLASK_APP=main.py; python -m flask run
+Post test
+```
+curl -X POST -d @test.json -H "Content-Type: application/json" http://localhost:5000/api/save
+```

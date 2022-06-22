@@ -5,16 +5,18 @@
             <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Phone Number</th>
                 <th>E-mail</th>
+                <th>Country Code</th>
+                <th>Phone Number</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>{{ contact.firstname }}</td>
-                <td>{{ contact.lastname }}</td>
-                <td>{{ contact.phonenumber }}</td>
+                <td>{{ contact.first_name }}</td>
+                <td>{{ contact.last_name }}</td>
                 <td>{{ contact.email }}</td>
+                <td>{{ contact.country_code }}</td>
+                <td>{{ contact.phone_number }}</td>
             </tr>
         </tbody>
     </table>
