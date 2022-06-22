@@ -7,16 +7,20 @@ def save_contact(contact):
     doc_ref.set(vars(contact))
 
 
-def get_contacts():
+def get_contacts(page_limit=50, start_after_email=None):
     contacts = []
     db = firestore.Client()
     docs_ref = db.collection(u'contacts')
-    docs = docs_ref.stream()
+    
+    doc_query = docs_ref.order_by(u'email').start_after({u'email': start_after_email}).limit(page_limit)
+    docs = doc_query.stream()
+
     for doc in docs:
-        print(f'{doc.id} => {doc.to_dict()}')
         c = doc.to_dict()
         c["id"] = doc.id
         contacts.append(c)
+        last_email = c['email']
+        print(last_email)
     return contacts
 
 
