@@ -1,0 +1,16 @@
+steps:
+- id: 'app deploy'
+  name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy --quiet']
+
+- id: 'ingress config'
+  name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'gcloud app services update default --ingress=internal-and-cloud-load-balancing']
+  
+tags:
+  - appengine
+  - phonebook
+
+timeout: 1200s

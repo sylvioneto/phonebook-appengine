@@ -7,7 +7,7 @@ steps:
   - | 
     terraform init \
     -backend-config="bucket=$PROJECT_ID-tf-state" \
-    -backend-config="prefix=terraform_gcp/cloudarmor"
+    -backend-config="prefix=phonebook"
       
 - id: 'tf plan'
   name: 'hashicorp/terraform:1.0.0'
@@ -25,6 +25,6 @@ options:
     - TF_VAR_project_id=$PROJECT_ID
 tags:
   - terraform
-  - cloud-armor
+  - phonebook
 
 timeout: 1200s
