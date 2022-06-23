@@ -1,5 +1,11 @@
 {% extends "template.html" %}
 {% block content %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="/{{ previous_page }}">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="/{{ next_page }}">Next</a></li>
+        </ul>
+    </nav>
     <table class="table table-sm">
         <thead>
             <tr>

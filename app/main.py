@@ -25,7 +25,14 @@ def warmup():
 @app.route('/')
 def index():
     contacts = gcp_firestore.get_contacts()
-    return render_template('list.html', title='Phonebook', contacts=contacts)
+    return render_template('list.html', title='Phonebook', contacts=contacts, next_page=1)
+
+
+@app.route('/<page>')
+def page(page):
+    page = int(page)
+    contacts = gcp_firestore.get_contacts(page)
+    return render_template('list.html', title='Phonebook', contacts=contacts, next_page=page+1, previous_page=page-1)
 
 
 @app.route('/new', methods=['GET'])
