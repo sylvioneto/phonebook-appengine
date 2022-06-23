@@ -31,8 +31,13 @@ def index():
 @app.route('/<page>')
 def page(page):
     page = int(page)
+    next_page=page+1
+    previous_page=page-1
+    if page == 0:
+        next_page = 1
+        previous_page = 0
     contacts = gcp_firestore.get_contacts(page)
-    return render_template('list.html', title='Phonebook', contacts=contacts, next_page=page+1, previous_page=page-1)
+    return render_template('list.html', title='Phonebook', contacts=contacts, next_page=next_page, previous_page=previous_page)
 
 
 @app.route('/new', methods=['GET'])
