@@ -4,11 +4,11 @@ runtime: python37
 instance_class: F1
 
 env_variables:
-  REDIS_HOST: <REDIS_IP>
+  REDIS_HOST: 10.200.0.4
   REDIS_PORT: "6379"
 
 vpc_access_connector:
-  name: projects/<PROJECT_ID>/locations/southamerica-east1/connectors/appengine-vpc-access
+  name: projects/syl-phonebook/locations/southamerica-east1/connectors/appengine-vpc-access
   # Send all egress traffic through the VPC Access Connector
   egress_setting: all-traffic 
 

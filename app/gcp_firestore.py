@@ -16,7 +16,6 @@ def get_contacts(page=None):
     contacts = []
     db = firestore.Client()
     docs_ref = db.collection(u'contacts')
-    
     doc_query = docs_ref.order_by(u'email').offset(page_offset).limit(page_limit)
     docs = doc_query.stream()
 
